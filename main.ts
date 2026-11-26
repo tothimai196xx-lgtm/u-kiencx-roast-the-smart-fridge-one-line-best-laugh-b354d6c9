@@ -13,6 +13,12 @@ import { dirname, join } from "node:path";
 const ENTRY =
   "My smart fridge's ice maker coughs out one cube at a time like a rigged slot machine that never pays, then beeps proudly, as if it just invented winter.";
 
+// Gate: the bounty requires exactly one line of 1–160 characters.
+if (ENTRY.length < 1 || ENTRY.length > 160 || ENTRY.includes("\n")) {
+  console.error(`entry invalid: ${ENTRY.length} chars, must be 1 line of 1-160 chars`);
+  process.exit(1);
+}
+
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });
 writeFileSync(join(outDir, "entry.txt"), ENTRY, "utf8");
